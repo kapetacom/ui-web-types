@@ -1,16 +1,31 @@
 {
     "name": "@blockware/ui-web-types",
-    "version": "0.0.2",
-    "main": "index.js",
+    "version": "0.0.3",
+    "main": "dist/index.js",
     "description": "Typescript types for implementing blockware UI",
     "keywords": [
         "blockware"
     ],
     "license": "MIT",
+    "scripts": {
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "npm run type-check -- --watch",
+        "build": "npm run build:types && npm run build:js",
+        "build:types": "tsc --emitDeclarationOnly",
+        "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
+    },
     "devDependencies": {
+        "@babel/cli": "^7.7.7",
+        "@babel/core": "^7.7.7",
+        "@babel/plugin-proposal-class-properties": "^7.7.4",
+        "@babel/plugin-proposal-numeric-separator": "^7.7.4",
+        "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+        "@babel/preset-env": "^7.7.7",
+        "@babel/preset-typescript": "^7.7.7",
+        "@types/lodash": "4.14.149",
+        "@types/react": "16.9.17",
         "lodash": "4.17.15",
         "react": "16.12.0",
-        "@types/lodash": "4.14.149",
-        "@types/react": "16.9.17"
+        "typescript": "^3.7.4"
     }
 }
