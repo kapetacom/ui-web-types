@@ -1,6 +1,6 @@
 {
     "name": "@blockware/ui-web-types",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "description": "Typescript types for implementing blockware UI",
@@ -20,14 +20,13 @@
         "build:types": "tsc --emitDeclarationOnly",
         "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
     },
-    "dependencies": {
-        "@types/lodash": "^4.14.149",
-        "@types/react": "^16.9.17"
-    },
+    "dependencies": {},
     "peerDependencies": {
         "react": "^16.12.0"
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.149",
+        "@types/react": "^16.9.17",
         "@babel/cli": "^7.7.7",
         "@babel/core": "^7.7.7",
         "@babel/plugin-proposal-class-properties": "^7.7.4",
