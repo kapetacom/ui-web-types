@@ -1,7 +1,8 @@
 import { Component } from "react";
 import {Type} from "./general";
-import {BlockConnectionSpec, BlockKind, DataWrapper, ResourceKind, ResourceMetadata} from "./blocks";
+import {BlockConnectionSpec, BlockKind, BlockWrapper, ResourceKind, ResourceMetadata} from "./blocks";
 import {SchemaEntity} from "./schemas";
+import {Traffic} from "./traffic";
 
 export enum ResourceRole {
     CONSUMES = 'CONSUMES',
@@ -13,6 +14,7 @@ export enum ResourceType {
     DATABASE = 'DATABASE',
     EXTENSION = 'EXTENSION'
 }
+
 
 export interface MappingChange<T = any,U = any, V = any> {
     source: ResourceKind<T>
@@ -43,14 +45,20 @@ export interface ResourceMapperProps<T = any,U = any, V = any> {
     onDataChanged?: (change: MappingChange<T,U,V>) => void
 }
 
+export interface ResourceInspectProps {
+    trafficLines: Traffic[]
+    mapping: ConnectionMethodsMapping
+}
+
 export interface ResourceConfigProps<T = ResourceMetadata,U = any> extends ResourceKind<U,T> {
-    block: DataWrapper<BlockKind>
+    block: BlockWrapper<BlockKind>
     creating?:boolean //True if the resource is new
     onDataChanged: (metadata:T, spec?:U) => void
 }
 
 export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
-    componentType: Type<Component<ResourceMapperProps, any>>
+    mappingComponentType: Type<Component<ResourceMapperProps, any>>
+    inspectComponentType: Type<Component<ResourceInspectProps, any>>
     fromKind: string
     createFrom?: (source:ResourceKind) => ResourceKind,
     validateMapping?:(connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => string[],

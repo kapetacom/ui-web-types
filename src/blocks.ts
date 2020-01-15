@@ -14,6 +14,11 @@ export interface DataWrapper<T = SchemaKind|BlockConnectionSpec> {
     setData: (data: T) => void
 }
 
+export interface BlockWrapper<T = SchemaKind> extends DataWrapper<T> {
+    getEntityNames: () => string[]
+    addEntity: (entity: SchemaEntity) => void
+}
+
 /* RESOURCE */
 
 export interface ResourceMetadata {
