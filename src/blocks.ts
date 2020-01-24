@@ -10,6 +10,7 @@ export interface SchemaKind<T = any, U = any> {
 
 
 export interface DataWrapper<T = SchemaKind|BlockConnectionSpec> {
+    id:string
     getData: () => T
     setData: (data: T) => void
 }
