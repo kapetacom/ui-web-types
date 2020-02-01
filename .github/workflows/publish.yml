@@ -18,7 +18,10 @@ jobs:
         registry-url: https://registry.npmjs.org/
     - run: npm install
     - run: npm version patch
-    - run: git push
+    - run: |
+        git config --global user.email "build@blockware.com"
+        git config --global user.name "Block Buildeer"
+        git push
     - run: npm publish
       env:
         CI: true
