@@ -57,12 +57,12 @@ export interface ResourceConfigProps<T = ResourceMetadata,U = any> extends Resou
 }
 
 export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
-    mappingComponentType: Type<Component<ResourceMapperProps, any>>
-    inspectComponentType: Type<Component<ResourceInspectProps, any>>
+    mappingComponentType?: Type<Component<ResourceMapperProps, any>>
+    inspectComponentType?: Type<Component<ResourceInspectProps, any>>
     fromKind: string
     createFrom?: (source:ResourceKind) => ResourceKind,
     validateMapping?:(connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => string[],
-    updateMapping: (connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
+    updateMapping?: (connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
 }
 
 export interface ResourceProviderConfig<T = any,U = any> {
