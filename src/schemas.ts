@@ -16,6 +16,7 @@ export interface SchemaEntry {
 
 export interface SchemaEntity {
     name: string
+    status?: boolean
     properties: SchemaProperties
 }
 
