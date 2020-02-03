@@ -26,6 +26,10 @@ export interface EntityConfigProps<U = any , T = any> extends SchemaKind<T,U> {
 
 /* SCHEMA HELPERS */
 
+/**
+ * Reformats value to a valid entity name
+ * @param type
+ */
 export function typeName(type?:SchemaEntryType) {
     if (!type) {
         return 'void';
@@ -33,6 +37,11 @@ export function typeName(type?:SchemaEntryType) {
 
     if (typeof type === 'string') {
         return type;
+    }
+
+    if (type.$ref && type.$ref.endsWith('[]')) {
+        //Handle lists
+        return type.$ref.substr(0, type.$ref.length - 2);
     }
 
     return type.$ref;
