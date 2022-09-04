@@ -105,7 +105,7 @@ export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryTy
     let aEntity:SchemaEntity|undefined = _.find(aEntities, {name:aEntityName});
     let bEntity:SchemaEntity|undefined = _.find(bEntities, {name:bEntityName});
 
-    if (!aEntity || !bEntity) {
+    if (!aEntity || !bEntity) {
         return false;
     }
 
