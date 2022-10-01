@@ -1,6 +1,7 @@
 import {Dimensions} from "./shapes";
 import {SchemaEntity} from "./schemas";
 import {ConnectionMethodsMapping} from "./resource-types";
+import {TypedValue} from "./general";
 
 export interface SchemaKind<T = any, U = any> {
     kind: string
@@ -34,15 +35,17 @@ export interface BlockServiceTarget {
     kind: string
     options?: any
 }
-export enum BlockType{
+export enum BlockType {
     SERVICE="service",
-    
 }
 
 export interface BlockServiceSpec {
     target: BlockServiceTarget
     type:BlockType
-    entities?: SchemaEntity[]
+    entities?: {
+        source: TypedValue,
+        types: SchemaEntity[]
+    }
     consumers?: ResourceKind[]
     providers?: ResourceKind[]
 }

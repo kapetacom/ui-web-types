@@ -22,6 +22,10 @@ export interface TypedName {
     type: string
 }
 
+export interface TypedValue {
+    type: string
+    value: string
+}
 
 export interface Asset<T = SchemaKind> {
     ref:string
