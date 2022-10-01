@@ -9,3 +9,4 @@ export * from './schemas';
 export * from './shapes';
 export * from './files';
 export * from './traffic';
+export * from './methods';
