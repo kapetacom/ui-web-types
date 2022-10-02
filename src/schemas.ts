@@ -8,6 +8,7 @@ export type SchemaEntryType = string|{$ref:string};
 
 export interface SchemaEntry {
     type: SchemaEntryType
+    description?: string
     items?: SchemaEntry
     properties?: SchemaProperties
     required?: string[]

@@ -10,7 +10,7 @@ export interface RESTMethodArgument extends MethodArgument{
 }
 
 export interface Method<T extends MethodArgument> {
-    description: string
+    description?: string
     method: HTTPMethod
     path: string
     arguments?: {
@@ -20,7 +20,7 @@ export interface Method<T extends MethodArgument> {
 }
 
 export interface RESTMethod extends Method<RESTMethodArgument> {
-    description: string
+    description?: string
     method: HTTPMethod
     path: string
     arguments?: {
