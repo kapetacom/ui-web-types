@@ -19,20 +19,24 @@ export interface SchemaEntry {
     enum?: string[]
 }
 
-export interface SchemaEntity {
+export interface SchemaEntityBase {
     type: SchemaEntityType
     name: string
     description?: string
 }
 
-export interface SchemaEnum extends SchemaEntity {
+export interface SchemaEnum extends SchemaEntityBase {
+    type: SchemaEntityType.ENUM
     values: string[]
 }
 
-export interface SchemaDTO extends SchemaEntity {
+export interface SchemaDTO extends SchemaEntityBase {
+    type: SchemaEntityType.DTO
     status?: boolean
     properties: SchemaProperties
 }
+
+export type SchemaEntity = SchemaDTO|SchemaEnum;
 
 export interface EntityConfigProps<U = any , T = any> extends SchemaKind<T,U> {
     creating?:boolean //True if the entity is a new one

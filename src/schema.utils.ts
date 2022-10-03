@@ -10,12 +10,12 @@ import {
 
 import _ from "lodash";
 
-export function isDTO(entity:SchemaEntity):boolean {
+export function isDTO(entity:SchemaEntity): entity is SchemaDTO {
     //Defaults to DTO
     return !entity.type || entity.type === SchemaEntityType.DTO;
 }
 
-export function isEnum(entity:SchemaEntity):boolean {
+export function isEnum(entity:SchemaEntity): entity is SchemaEnum {
     return entity.type === SchemaEntityType.ENUM;
 }
 
@@ -23,14 +23,14 @@ export function toEnum(entity:SchemaEntity):SchemaEnum {
     if (!isEnum(entity)) {
         throw new Error('Entity was not enum');
     }
-    return entity as SchemaEnum;
+    return entity;
 }
 
 export function toDTO(entity:SchemaEntity):SchemaDTO {
     if (!isDTO(entity)) {
         throw new Error('Entity was not DTO');
     }
-    return entity as SchemaDTO;
+    return entity;
 }
 
 
