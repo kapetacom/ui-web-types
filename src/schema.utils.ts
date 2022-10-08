@@ -2,7 +2,6 @@ import {
     SchemaDTO,
     SchemaEntity,
     SchemaEntityType,
-    SchemaEntry,
     SchemaEntryType,
     SchemaEnum,
     SchemaProperties
@@ -33,26 +32,38 @@ export function toDTO(entity:SchemaEntity):SchemaDTO {
     return entity;
 }
 
+export function toStringName(type?:SchemaEntryType):string {
+    if (!type) {
+        return 'void';
+    }
+
+    if (typeof type !== 'string' && type.$ref) {
+        type = type.$ref;
+    }
+    if (typeof type !== 'string') {
+        throw new Error('Invalid type:' + type);
+    }
+
+    return type;
+}
+
+export function isList(type?:SchemaEntryType) {
+    return toStringName(type).endsWith('[]')
+}
 
 /**
  * Reformats value to a valid entity name
  * @param type
  */
 export function typeName(type?:SchemaEntryType) {
-    if (!type) {
-        return 'void';
-    }
+    type = toStringName(type)
 
-    if (typeof type === 'string') {
-        return type;
-    }
-
-    if (type.$ref && type.$ref.endsWith('[]')) {
+    if (type.endsWith('[]')) {
         //Handle lists
-        return type.$ref.substr(0, type.$ref.length - 2);
+        return type.substring(0, type.length - 2);
     }
 
-    return type.$ref;
+    return type;
 }
 
 export function typeValue(type?:SchemaEntryType) {
@@ -89,28 +100,36 @@ export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryTy
         return true;
     }
 
-    if (!a || !b) {
+    if (!a) {
+        a = 'void';
+    }
+
+    if (!b) {
+        b = 'void';
+    }
+
+    if (isList(a) !== isList(b)) {
         return false;
     }
 
-    if (isStringableType(a) &&
-        isStringableType(b)) {
-        return true;
-    }
+    const aTypeName = typeName(a);
+    const bTypeName = typeName(b);
 
     if (isBuiltInType(a) !== isBuiltInType(b)) {
         return false;
     }
 
-    if (isBuiltInType(a)) {
-        return typeName(a) === typeName(b);
+    if (isStringableType(aTypeName) &&
+        isStringableType(bTypeName)) {
+        return true;
     }
 
-    const aEntityName = typeName(a);
-    const bEntityName = typeName(b);
+    if (isBuiltInType(a)) {
+        return aTypeName === bTypeName;
+    }
 
-    let aEntity:SchemaDTO|undefined = _.find(aEntities, {name:aEntityName});
-    let bEntity:SchemaDTO|undefined = _.find(bEntities, {name:bEntityName});
+    let aEntity:SchemaDTO|undefined = _.find(aEntities, {name:aTypeName});
+    let bEntity:SchemaDTO|undefined = _.find(bEntities, {name:bTypeName});
 
     if (!aEntity || !bEntity) {
         return false;
@@ -148,41 +167,16 @@ export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaPropert
     return true;
 }
 
-export function isSchemaEntriesCompatible(aProperties:SchemaEntry[], bProperties:SchemaEntry[], aEntities:SchemaDTO[], bEntities:SchemaDTO[]) {
-    if (aProperties.length !== bProperties.length) {
-        return false;
-    }
-
-    return isSchemaEntryTypesCompatible(
-        aProperties.map(p => p.type),
-        bProperties.map(p => p.type),
-        aEntities,
-        bEntities
-    );
-}
-
-export function isSchemaEntryTypesCompatible(aTypes:SchemaEntryType[], bTypes:SchemaEntryType[], aEntities:SchemaDTO[], bEntities:SchemaDTO[]) {
-    if (aTypes.length !== bTypes.length) {
-        return false;
-    }
-
-    aTypes.forEach((aType) => {
-        for(let i = 0; i < bTypes.length; i++) {
-            const bType = bTypes[i];
-            if (isCompatibleTypes(aType, bType, aEntities, bEntities)) {
-                bTypes.splice(i, 1);
-                return;
-            } else {
-                console.log('aType is NOT ok with bType', aType, bType);
-            }
-        }
-    });
-
-    return bTypes.length === 0;
-}
-
 export function hasEntityReference(object:any, entityName:string) {
-    const values = object && object.length ? object : Object.values(object);
+    if (!object) {
+        return false;
+    }
+
+    if (!_.isObject(object) && !_.isArray(object)) {
+        return false;
+    }
+
+    const values = _.isArray(object) ? object : Object.values(object);
 
     for(let i = 0 ; i < values.length; i++) {
         const value = values[i];
