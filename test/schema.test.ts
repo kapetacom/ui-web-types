@@ -1,5 +1,6 @@
 import {describe, expect, test} from "@jest/globals";
 import {
+    getCompatibilityIssuesForTypes, getSchemaEntityCompatibilityIssues, getSchemaEnumValuesCompatibilityIssues,
     hasEntityReference,
     isBuiltInType,
     isCompatibleTypes,
@@ -167,6 +168,9 @@ describe('schemas', () => {
             expect(isCompatibleTypes('string', 'string', [], [])).toBe(true);
             expect(isCompatibleTypes('string', 'float', [], [])).toBe(true);
             expect(isCompatibleTypes('boolean', 'float', [], [])).toBe(false);
+            expect(getCompatibilityIssuesForTypes('boolean', 'float', [], [])).toEqual([
+                'Types are not compatible'
+            ]);
             expect(isCompatibleTypes(undefined, 'float', [], [])).toBe(false);
             expect(isCompatibleTypes('float', null, [], [])).toBe(false);
 
@@ -174,6 +178,9 @@ describe('schemas', () => {
             expect(isCompatibleTypes('string[]', 'float[]', [], [])).toBe(true);
 
             expect(isCompatibleTypes('string', {$ref:'User'}, [], [])).toBe(false);
+            expect(getCompatibilityIssuesForTypes('string', {$ref:'User'}, [], [])).toEqual([
+                'Types are not compatible'
+            ]);
             expect(isCompatibleTypes({$ref:'User'}, 'string', [], [])).toBe(false);
         });
 
@@ -187,6 +194,16 @@ describe('schemas', () => {
                     properties: {}
                 }
             ])).toBe(false);
+
+            expect(getCompatibilityIssuesForTypes({$ref:'User'}, {$ref:'Person'}, [], [
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'Person',
+                    properties: {}
+                }
+            ])).toEqual([
+                'User was not defined'
+            ]);
         })
 
         test('entities of different name can be compatible', () => {
@@ -283,6 +300,31 @@ describe('schemas', () => {
                 [],[]
             )).toBe(false);
 
+            expect(getSchemaEntityCompatibilityIssues(
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        },
+                        name: {
+                            type: 'string'
+                        }
+                    }
+                },
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        }
+                    }
+                },
+                [],[]
+            )).toEqual(['Property counts did not match']);
+
             expect(isSchemaEntityCompatible(
                 {
                     type: SchemaEntityType.DTO,
@@ -310,6 +352,34 @@ describe('schemas', () => {
                 },
                 [],[]
             )).toBe(false);
+
+            expect(getSchemaEntityCompatibilityIssues(
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        },
+                        fullName: {
+                            type: 'string'
+                        }
+                    }
+                },
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        },
+                        name: {
+                            type: 'string'
+                        }
+                    }
+                },
+                [],[]
+            )).toEqual(['Property not found: fullName']);
         })
 
         test('Simple entity with same properties but different types is not compatible', () => {
@@ -343,9 +413,40 @@ describe('schemas', () => {
                 },
                 [],[]
             )).toBe(false);
+
+            expect(getSchemaEntityCompatibilityIssues(
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        },
+                        name: {
+                            type: 'string'
+                        }
+                    }
+                },
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        },
+                        name: {
+                            type: 'array',
+                            items: {
+                                type: 'string'
+                            }
+                        }
+                    }
+                },
+                [],[]
+            )).toEqual(['Types are not compatible for property: name']);
         });
 
-        test('Simple entity with of different types is not compatible', () => {
+        test('Simple entity with different types is not compatible', () => {
             expect(isSchemaEntityCompatible(
                 {
                     type: SchemaEntityType.DTO,
@@ -359,6 +460,20 @@ describe('schemas', () => {
                 },
                 [],[]
             )).toBe(false);
+
+            expect(getSchemaEntityCompatibilityIssues(
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {}
+                },
+                {
+                    type: SchemaEntityType.ENUM,
+                    name: 'User',
+                    values: []
+                },
+                [],[]
+            )).toEqual(['Enum and DTO are not compatible']);
         });
 
         test('Simple enum entities is compatible if they have the same values', () => {
@@ -379,9 +494,17 @@ describe('schemas', () => {
 
         test('enum values must contain all the values to be a mtach', () => {
             expect(isSchemaEnumValuesCompatible(['A','B','C'], ['B','C'])).toBe(false);
-            expect(isSchemaEnumValuesCompatible(['A','B'], ['B','C'])).toBe(false);
+
             expect(isSchemaEnumValuesCompatible(['A','B'], ['A','B','C'])).toBe(false);
             expect(isSchemaEnumValuesCompatible(['A','B','C','D'], ['A','B','C'])).toBe(false);
+            expect(
+                getSchemaEnumValuesCompatibilityIssues(['A','B','C','D'], ['A','B','C'])
+            ).toEqual(['Mismatch in number of enum values']);
+
+            expect(isSchemaEnumValuesCompatible(['A','B'], ['B','C'])).toBe(false);
+            expect(
+                getSchemaEnumValuesCompatibilityIssues(['A','B'], ['B','C'])
+            ).toEqual(['Missing enum value: A']);
         })
 
         test('enum values are compatible regardless of order', () => {

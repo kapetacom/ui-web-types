@@ -94,10 +94,9 @@ export function isStringableType(type:SchemaEntryType) {
 
     return ['string','number','float','integer','decimal','double'].indexOf(type) > -1;
 }
-
-export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryType|undefined, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+export function getCompatibilityIssuesForTypes(a: SchemaEntryType|undefined, b: SchemaEntryType|undefined, aEntities:SchemaEntity[], bEntities:SchemaEntity[]):string[] {
     if (!a && !b) {
-        return true;
+        return [];
     }
 
     if (!a) {
@@ -109,66 +108,104 @@ export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryTy
     }
 
     if (isList(a) !== isList(b)) {
-        return false;
+        return [`Types are not both lists`];
     }
 
     const aTypeName = typeName(a);
     const bTypeName = typeName(b);
 
     if (isBuiltInType(a) !== isBuiltInType(b)) {
-        return false;
+        return [`Types are not compatible`];
     }
 
     if (isStringableType(aTypeName) &&
         isStringableType(bTypeName)) {
-        return true;
+        return [];
     }
 
     if (isBuiltInType(a)) {
-        return aTypeName === bTypeName;
+        if (aTypeName === bTypeName) {
+            return [];
+        }
+        return [`Types are not compatible`];
     }
 
     let aEntity:SchemaEntity|undefined = _.find(aEntities, {name:aTypeName});
     let bEntity:SchemaEntity|undefined = _.find(bEntities, {name:bTypeName});
 
-    if (!aEntity || !bEntity) {
-        return false;
+    if (!aEntity && !bEntity) {
+        return [`Both entities were not defined`];
     }
 
-    return isSchemaEntityCompatible(aEntity, bEntity, aEntities, bEntities);
+    if (!aEntity) {
+        return [`${aTypeName} was not defined`];
+    }
+
+    if (!aEntity) {
+        return [`${bTypeName} was not defined`];
+    }
+
+    return getSchemaEntityCompatibilityIssues(aEntity, bEntity, aEntities, bEntities);
 }
 
-export function isSchemaEntityCompatible(a:SchemaEntity, b:SchemaEntity, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryType|undefined, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+    return getCompatibilityIssuesForTypes(a,b,aEntities, bEntities).length === 0;
+}
+
+export function getSchemaEntityCompatibilityIssues(a:SchemaEntity, b:SchemaEntity, aEntities:SchemaEntity[], bEntities:SchemaEntity[]):string[] {
     if (isDTO(a) !== isDTO(b)) {
-        return false;
+        return [`Enum and DTO are not compatible`];
     }
 
     if (isDTO(a) && isDTO(b)) {
-        return isSchemaPropertiesCompatible(a.properties, b.properties, aEntities, bEntities);
+        return getSchemaPropertiesCompatibilityIssues(a.properties, b.properties, aEntities, bEntities);
     }
 
     if (isEnum(a) && isEnum(b)) {
-        return isSchemaEnumValuesCompatible(a.values, b.values)
+        return getSchemaEnumValuesCompatibilityIssues(a.values, b.values)
     }
 
-    return false;
+    return [
+        `Unknown entity types provided`
+    ];
+}
+
+export function isSchemaEntityCompatible(a:SchemaEntity, b:SchemaEntity, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+    return getSchemaEntityCompatibilityIssues(a,b,aEntities, bEntities).length === 0;
+}
+
+export function getSchemaEnumValuesCompatibilityIssues(a:string[], b:string[]):string[] {
+    if (a.length != b.length) {
+        return ['Mismatch in number of enum values'];
+    }
+
+    for(let i = 0; i < a.length; i++) {
+        if (!b.some(bVal => bVal === a[i])) {
+            return [`Missing enum value: ${a[i]}`];
+        }
+    }
+
+    for(let i = 0; i < b.length; i++) {
+        if (!a.some(aVal => aVal === b[i])) {
+            return [`Missing enum value: ${b[i]}`];
+        }
+    }
+
+    return [];
 }
 
 export function isSchemaEnumValuesCompatible(a:string[], b:string[]) {
-    if (a.length != b.length) {
-        return false;
-    }
-    return a.filter(aVal => {
-        return !b.some(bVal => bVal === aVal)
-    }).length === 0;
+    return getSchemaEnumValuesCompatibilityIssues(a,b).length === 0;
 }
 
-export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaProperties, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+export function getSchemaPropertiesCompatibilityIssues(a:SchemaProperties, b:SchemaProperties, aEntities:SchemaEntity[], bEntities:SchemaEntity[]):string[] {
     const aProperties = Object.values(a);
     const bProperties = Object.values(b);
 
     if (aProperties.length !== bProperties.length) {
-        return false;
+        return [
+            `Property counts did not match`
+        ];
     }
 
     const aEntries = Object.entries(a);
@@ -177,15 +214,21 @@ export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaPropert
 
         const bProperty = b[id];
         if (!bProperty) {
-            return false;
+            return [`Property not found: ${id}`];
         }
 
-        if (!isCompatibleTypes(aProperty.type, bProperty.type, aEntities, bEntities)) {
-            return false;
+        const issues = getCompatibilityIssuesForTypes(aProperty.type, bProperty.type, aEntities, bEntities)
+
+        if (issues.length > 0) {
+            return issues.map(error => `${error} for property: ${id}`);
         }
     }
 
-    return true;
+    return [];
+}
+
+export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaProperties, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+    return getSchemaPropertiesCompatibilityIssues(a, b, aEntities, bEntities).length === 0;
 }
 
 export function hasEntityReference(object:any, entityName:string) {
