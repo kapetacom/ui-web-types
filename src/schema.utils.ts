@@ -95,7 +95,7 @@ export function isStringableType(type:SchemaEntryType) {
     return ['string','number','float','integer','decimal','double'].indexOf(type) > -1;
 }
 
-export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryType|undefined, aEntities:SchemaDTO[], bEntities:SchemaDTO[]) {
+export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryType|undefined, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
     if (!a && !b) {
         return true;
     }
@@ -128,8 +128,8 @@ export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryTy
         return aTypeName === bTypeName;
     }
 
-    let aEntity:SchemaDTO|undefined = _.find(aEntities, {name:aTypeName});
-    let bEntity:SchemaDTO|undefined = _.find(bEntities, {name:bTypeName});
+    let aEntity:SchemaEntity|undefined = _.find(aEntities, {name:aTypeName});
+    let bEntity:SchemaEntity|undefined = _.find(bEntities, {name:bTypeName});
 
     if (!aEntity || !bEntity) {
         return false;
@@ -138,11 +138,32 @@ export function isCompatibleTypes(a: SchemaEntryType|undefined, b: SchemaEntryTy
     return isSchemaEntityCompatible(aEntity, bEntity, aEntities, bEntities);
 }
 
-export function isSchemaEntityCompatible(a:SchemaDTO, b:SchemaDTO, aEntities:SchemaDTO[], bEntities:SchemaDTO[]) {
-    return isSchemaPropertiesCompatible(a.properties, b.properties, aEntities, bEntities);
+export function isSchemaEntityCompatible(a:SchemaEntity, b:SchemaEntity, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
+    if (isDTO(a) !== isDTO(b)) {
+        return false;
+    }
+
+    if (isDTO(a) && isDTO(b)) {
+        return isSchemaPropertiesCompatible(a.properties, b.properties, aEntities, bEntities);
+    }
+
+    if (isEnum(a) && isEnum(b)) {
+        return isSchemaEnumValuesCompatible(a.values, b.values)
+    }
+
+    return false;
 }
 
-export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaProperties, aEntities:SchemaDTO[], bEntities:SchemaDTO[]) {
+export function isSchemaEnumValuesCompatible(a:string[], b:string[]) {
+    if (a.length != b.length) {
+        return false;
+    }
+    return a.filter(aVal => {
+        return !b.some(bVal => bVal === aVal)
+    }).length === 0;
+}
+
+export function isSchemaPropertiesCompatible(a:SchemaProperties, b:SchemaProperties, aEntities:SchemaEntity[], bEntities:SchemaEntity[]) {
     const aProperties = Object.values(a);
     const bProperties = Object.values(b);
 

@@ -6,7 +6,7 @@ import {
     isDTO,
     isEnum,
     isList,
-    isSchemaEntityCompatible,
+    isSchemaEntityCompatible, isSchemaEnumValuesCompatible,
     isStringableType,
     SchemaEntity,
     SchemaEntityType,
@@ -15,7 +15,7 @@ import {
     toStringName,
     typeName,
     typeValue
-} from "../../src";
+} from "../src";
 
 const SIMPLE_ENUM: SchemaEntity = {type: SchemaEntityType.ENUM, name: 'test', values: []};
 const SIMPLE_DTO: SchemaEntity = {type: SchemaEntityType.DTO, name: 'test', properties: {}};
@@ -343,6 +343,49 @@ describe('schemas', () => {
                 },
                 [],[]
             )).toBe(false);
+        });
+
+        test('Simple entity with of different types is not compatible', () => {
+            expect(isSchemaEntityCompatible(
+                {
+                    type: SchemaEntityType.DTO,
+                    name: 'User',
+                    properties: {}
+                },
+                {
+                    type: SchemaEntityType.ENUM,
+                    name: 'User',
+                    values: []
+                },
+                [],[]
+            )).toBe(false);
+        });
+
+        test('Simple enum entities is compatible if they have the same values', () => {
+            expect(isSchemaEntityCompatible(
+                {
+                    type: SchemaEntityType.ENUM,
+                    name: 'User',
+                    values: ['A','B']
+                },
+                {
+                    type: SchemaEntityType.ENUM,
+                    name: 'User',
+                    values: ['A','B']
+                },
+                [],[]
+            )).toBe(true);
+        });
+
+        test('enum values must contain all the values to be a mtach', () => {
+            expect(isSchemaEnumValuesCompatible(['A','B','C'], ['B','C'])).toBe(false);
+            expect(isSchemaEnumValuesCompatible(['A','B'], ['B','C'])).toBe(false);
+            expect(isSchemaEnumValuesCompatible(['A','B'], ['A','B','C'])).toBe(false);
+            expect(isSchemaEnumValuesCompatible(['A','B','C','D'], ['A','B','C'])).toBe(false);
+        })
+
+        test('enum values are compatible regardless of order', () => {
+            expect(isSchemaEnumValuesCompatible(['A','B','C'], ['B','C', 'A'])).toBe(true);
         })
 
     });
