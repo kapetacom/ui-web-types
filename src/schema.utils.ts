@@ -134,14 +134,14 @@ export function getCompatibilityIssuesForTypes(a: SchemaEntryType|undefined, b: 
     let bEntity:SchemaEntity|undefined = _.find(bEntities, {name:bTypeName});
 
     if (!aEntity && !bEntity) {
-        return [`Both entities were not defined`];
+        return [`${aTypeName} was not defined`];
     }
 
     if (!aEntity) {
         return [`${aTypeName} was not defined`];
     }
 
-    if (!aEntity) {
+    if (!bEntity) {
         return [`${bTypeName} was not defined`];
     }
 
