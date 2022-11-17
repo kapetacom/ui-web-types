@@ -52,16 +52,17 @@ export interface BlockServiceSpec {
 
 export interface BlockMetadata {
     name: string
-    version: string
+    title?: string
 }
 
 export type BlockKind<T = BlockServiceSpec, U = BlockMetadata> = SchemaKind<T,U>;
 
 /* Plan */
-export const PLAN_KIND = 'core.blockware.com/v1/Plan';
+export const PLAN_KIND = 'core/plan';
 
 export interface PlanMetadata {
     name: string
+    title?: string
 }
 
 export interface BlockReference {
