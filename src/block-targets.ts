@@ -10,7 +10,7 @@ export interface TargetConfigProps<T = Object> {
 export interface TargetConfig<T = Object> {
     kind: string
     blockKinds: string[]
-    name: string
+    title?: string
     componentType?: Type<Component<TargetConfigProps<T>,any>>
     validate?: (options:T) => string[];
 }
