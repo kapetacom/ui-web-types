@@ -1,7 +1,8 @@
 /* GENERIC TYPES */
 
-import {SchemaKind} from "./blocks";
 
+import {BlockConnectionSpec} from "./plans";
+import {SchemaKind} from "./core";
 
 export enum ItemType {
     BLOCK = "BLOCK",
@@ -33,4 +34,12 @@ export interface Asset<T = SchemaKind> {
     kind:string
     data:T
     exists:boolean
+}
+
+
+
+export interface DataWrapper<T = SchemaKind|BlockConnectionSpec> {
+    id:string
+    getData: () => T
+    setData: (data: T) => void
 }

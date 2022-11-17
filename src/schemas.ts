@@ -1,6 +1,8 @@
-import type { SchemaKind } from './blocks';
+
 
 /* SCHEMA TYPES */
+
+import type {SchemaKind} from "./core";
 
 export type SchemaProperties = {[key:string]:SchemaEntry};
 export type SchemaEntryType = string|{$ref:string};

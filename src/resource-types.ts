@@ -1,8 +1,10 @@
 import { Component } from "react";
 import {Type} from "./general";
-import {BlockConnectionSpec, BlockKind, BlockWrapper, ResourceKind, ResourceMetadata} from "./blocks";
+import { BlockKind, BlockWrapper} from "./blocks";
 import {SchemaEntity} from "./schemas";
 import {Traffic} from "./traffic";
+import {ResourceKind, ResourceMetadata} from "./resources";
+import {BlockConnectionSpec} from "./plans";
 
 export enum ResourceRole {
     CONSUMES = 'CONSUMES',
@@ -14,7 +16,6 @@ export enum ResourceType {
     DATABASE = 'DATABASE',
     EXTENSION = 'EXTENSION'
 }
-
 
 export interface MappingChange<T = any,U = any, V = any> {
     source: ResourceKind<T>
@@ -41,7 +42,7 @@ export interface ResourceMapperProps<T = any,U = any, V = any> {
     value?: V
     sourceEntities: SchemaEntity[]
     targetEntities: SchemaEntity[]
-    name:string
+    title:string
     onDataChanged?: (change: MappingChange<T,U,V>) => void
 }
 
@@ -77,7 +78,7 @@ export interface ResourceProviderConfig<T = any,U = any> {
 
 export interface ResourceConfig<T = any,U = any>  extends ResourceProviderConfig<T,U> {
     kind: string;
-    name: string;
+    title?: string;
     role: ResourceRole;
     type: ResourceType;
     consumableKind?: string;

@@ -1,4 +1,5 @@
 
+export * from './core';
 export * from './block-targets';
 export * from './block-types';
 export * from './blocks';
@@ -11,3 +12,5 @@ export * from './shapes';
 export * from './files';
 export * from './traffic';
 export * from './methods';
+export * from './resources';
+export * from './plans';
