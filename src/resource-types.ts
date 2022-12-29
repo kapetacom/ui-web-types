@@ -78,6 +78,7 @@ export interface ResourceProviderConfig<T = any,U = any> {
 
 export interface ResourceConfig<T = any,U = any>  extends ResourceProviderConfig<T,U> {
     kind: string;
+    version: string
     title?: string;
     role: ResourceRole;
     type: ResourceType;
