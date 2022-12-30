@@ -9,6 +9,7 @@ export interface BlockConfigProps<U = BlockMetadata, T = any> extends EntityConf
 
 export interface BlockConfig<T = BlockServiceSpec> {
     kind: string
+    version: string
     title?: string
     componentType: Type<Component<BlockConfigProps, any>>
     validate?: (block: BlockKind<T>) => string[];
