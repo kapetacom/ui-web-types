@@ -11,12 +11,12 @@ export enum ItemType {
 }
 
 export interface Type<T> extends Function {
-    new (...args: any[]): T;
+    new(...args: any[]): T;
 }
 
-export type ComponentFunction<T> = (props:T) => JSX.Element;
+export type ComponentFunction<T> = (props: T) => JSX.Element;
 
-export type ComponentType<T = any,U = any> = Type<React.Component<T,U>>|ComponentFunction<T>
+export type ComponentType<T = any, U = any> = Type<React.Component<T, U>> | ComponentFunction<T>
 
 export interface TypedName {
     name: string
@@ -29,17 +29,19 @@ export interface TypedValue {
 }
 
 export interface Asset<T = SchemaKind> {
-    ref:string
-    path:string
-    kind:string
-    data:T
-    exists:boolean
+    ref: string
+    path: string
+    kind: string
+    data: T
+    exists: boolean
+    ymlPath: string
+    version: string
+    editable: boolean
 }
 
 
-
-export interface DataWrapper<T = SchemaKind|BlockConnectionSpec> {
-    id:string
+export interface DataWrapper<T = SchemaKind | BlockConnectionSpec> {
+    id: string
     getData: () => T
     setData: (data: T) => void
 }
