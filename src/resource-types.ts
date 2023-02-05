@@ -64,6 +64,7 @@ export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
     createFrom?: (source:ResourceKind) => ResourceKind,
     validateMapping?:(connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => string[],
     updateMapping?: (connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
+    createMapping?: (from:ResourceKind<T>, to:ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
 }
 
 export interface ResourceProviderConfig<T = any,U = any> {

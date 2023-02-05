@@ -14,13 +14,18 @@ export interface BlockServiceTarget {
     kind: string
     options?: any
 }
+
+/**
+ * Unused - kept for backward compatibility
+ *
+ * @deprecated
+ */
 export enum BlockType {
     SERVICE="service",
 }
 
 export interface BlockServiceSpec {
     target: BlockServiceTarget
-    type:BlockType
     entities?: {
         source: TypedValue,
         types: SchemaEntity[]
