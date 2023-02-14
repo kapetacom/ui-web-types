@@ -14,3 +14,4 @@ export * from './traffic';
 export * from './methods';
 export * from './resources';
 export * from './plans';
+export * from './identities';
