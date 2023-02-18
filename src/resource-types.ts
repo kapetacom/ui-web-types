@@ -1,6 +1,5 @@
-import { Component } from "react";
-import {Type} from "./general";
-import { BlockKind, BlockWrapper} from "./blocks";
+import {ComponentType} from "react";
+import {BlockKind, BlockWrapper} from "./blocks";
 import {SchemaEntity} from "./schemas";
 import {Traffic} from "./traffic";
 import {ResourceKind, ResourceMetadata} from "./resources";
@@ -58,8 +57,8 @@ export interface ResourceConfigProps<T = ResourceMetadata,U = any> extends Resou
 }
 
 export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
-    mappingComponentType?: Type<Component<ResourceMapperProps, any>>
-    inspectComponentType?: Type<Component<ResourceInspectProps, any>>
+    mappingComponentType?: ComponentType<ResourceMapperProps>
+    inspectComponentType?: ComponentType<ResourceInspectProps>
     fromKind: string
     createFrom?: (source:ResourceKind) => ResourceKind,
     validateMapping?:(connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => string[],
@@ -71,7 +70,7 @@ export interface ResourceProviderConfig<T = any,U = any> {
     resolveEntities?: (resource: ResourceKind<U,T>) => string[];
     renameEntityReferences?: (resource: ResourceKind, from:string, to:string) => void;
     converters?: ResourceConverter<U>[];
-    componentType?: Type<Component<ResourceConfigProps<T,U>, any>>;
+    componentType?: ComponentType<ResourceConfigProps<T,U>>;
     getCounterValue?: (data: ResourceKind<U, T>) => number;
     hasMethod?: (data: ResourceKind<U, T>, methodId:string) => boolean;
     validate?: (data: ResourceKind<U, T>, entities:SchemaEntity[]) => string[];

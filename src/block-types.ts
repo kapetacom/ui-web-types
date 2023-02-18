@@ -1,16 +1,15 @@
-import type { Component } from "react";
-import type {Type} from "./general";
-import type {BlockKind, BlockMetadata, BlockServiceSpec} from "./blocks";
-import type {EntityConfigProps} from "./schemas";
+import type {BlockKind, BlockServiceSpec} from "./blocks";
+import {ComponentType} from "react";
 
-export interface BlockConfigProps<U = BlockMetadata, T = any> extends EntityConfigProps<U,T> {
-    onDataChanged: (metadata:U, spec:T) => void
+
+interface BlockConfigComponentProps {
+    creating?:boolean
 }
 
 export interface BlockConfig<T = BlockServiceSpec> {
     kind: string
     version: string
     title?: string
-    componentType: Type<Component<BlockConfigProps, any>>
+    componentType: ComponentType<BlockConfigComponentProps>
     validate?: (block: BlockKind<T>) => string[];
 }

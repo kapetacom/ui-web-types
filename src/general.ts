@@ -1,6 +1,5 @@
 /* GENERIC TYPES */
 
-
 import {BlockConnectionSpec} from "./plans";
 import {SchemaKind} from "./core";
 
@@ -14,9 +13,6 @@ export interface Type<T> extends Function {
     new(...args: any[]): T;
 }
 
-export type ComponentFunction<T> = (props: T) => JSX.Element;
-
-export type ComponentType<T = any, U = any> = Type<React.Component<T, U>> | ComponentFunction<T>
 
 export interface TypedName {
     name: string
