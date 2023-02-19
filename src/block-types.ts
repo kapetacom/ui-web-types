@@ -2,7 +2,7 @@ import type {BlockKind, BlockServiceSpec} from "./blocks";
 import {ComponentType} from "react";
 
 
-interface BlockConfigComponentProps {
+export interface BlockConfigComponentProps {
     creating?:boolean
 }
 
