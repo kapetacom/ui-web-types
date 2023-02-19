@@ -1,6 +1,6 @@
 {
     "name": "@blockware/ui-web-types",
-    "version": "0.0.47",
+    "version": "0.0.48",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "types": "dist/index.d.ts",
@@ -26,17 +26,19 @@
         "test": "jest"
     },
     "peerDependencies": {
-        "react": ">=18.0.0",
-        "lodash": "^4.0.0"
+        "lodash": "4",
+        "react": ">=18",
+        "@types/react": ">=18",
+        "@types/lodash": "4"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-node-resolve": "^14.1.0",
         "@rollup/plugin-typescript": "^8.5.0",
-        "@types/lodash": "^4.14.149",
-        "@types/react": "^18.0.20",
-        "react": "^18.0.20",
-        "lodash": "^4.17.21",
+        "@types/react": ">=18",
+        "@types/lodash": "4",
+        "react": ">=18",
+        "lodash": "4",
         "rollup": "^2.79.0",
         "rollup-plugin-dts": "^4.2.2",
         "rollup-plugin-peer-deps-external": "^2.2.4",
