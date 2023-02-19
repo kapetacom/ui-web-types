@@ -2,7 +2,7 @@ import {ComponentType} from "react";
 import {BlockKind, BlockWrapper} from "./blocks";
 import {SchemaEntity} from "./schemas";
 import {Traffic} from "./traffic";
-import {ResourceKind, ResourceMetadata} from "./resources";
+import {ResourceKind} from "./resources";
 import {BlockConnectionSpec} from "./plans";
 
 export enum ResourceRole {
@@ -50,10 +50,9 @@ export interface ResourceInspectProps {
     mapping: ConnectionMethodsMapping
 }
 
-export interface ResourceConfigProps<T = ResourceMetadata,U = any> extends ResourceKind<U,T> {
+export interface ResourceConfigProps  {
     block: BlockWrapper<BlockKind>
     creating?:boolean //True if the resource is new
-    onDataChanged: (metadata:T, spec?:U) => void
 }
 
 export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
@@ -70,7 +69,7 @@ export interface ResourceProviderConfig<T = any,U = any> {
     resolveEntities?: (resource: ResourceKind<U,T>) => string[];
     renameEntityReferences?: (resource: ResourceKind, from:string, to:string) => void;
     converters?: ResourceConverter<U>[];
-    componentType?: ComponentType<ResourceConfigProps<T,U>>;
+    componentType?: ComponentType<ResourceConfigProps>;
     getCounterValue?: (data: ResourceKind<U, T>) => number;
     hasMethod?: (data: ResourceKind<U, T>, methodId:string) => boolean;
     validate?: (data: ResourceKind<U, T>, entities:SchemaEntity[]) => string[];
