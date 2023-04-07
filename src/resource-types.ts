@@ -51,7 +51,7 @@ export interface ResourceInspectProps {
 }
 
 export interface ResourceConfigProps  {
-    block: BlockWrapper<BlockKind>
+    block: BlockKind
     creating?:boolean //True if the resource is new
 }
 
