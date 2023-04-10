@@ -1,26 +1,23 @@
 import {ComponentType} from "react";
-import {BlockKind, BlockWrapper} from "./blocks";
-import {SchemaEntity} from "./schemas";
 import {Traffic} from "./traffic";
-import {ResourceKind} from "./resources";
-import {BlockConnectionSpec} from "./plans";
+import {BlockDefinition, Connection, Entity, Resource} from "@kapeta/schemas";
 
 export enum ResourceRole {
     CONSUMES = 'CONSUMES',
     PROVIDES = 'PROVIDES'
 }
 
-export enum ResourceType {
-    SERVICE = 'SERVICE',
-    DATABASE = 'DATABASE',
+export enum ResourceProviderType {
+    INTERNAL = 'INTERNAL',
+    OPERATOR = 'OPERATOR',
     EXTENSION = 'EXTENSION'
 }
 
-export interface MappingChange<T = any,U = any, V = any> {
-    source: ResourceKind<T>
-    sourceEntities: SchemaEntity[]
-    target: ResourceKind<U>
-    targetEntities: SchemaEntity[]
+export interface ResourceConnectionMappingChange<T = any,U = any, V = any> {
+    source: Resource
+    sourceEntities: Entity[]
+    target: Resource
+    targetEntities: Entity[]
     data:V
 }
 
@@ -35,51 +32,51 @@ export interface ConnectionMethodMapping {
 
 export type ConnectionMethodsMapping = {[key:string]:ConnectionMethodMapping};
 
-export interface ResourceMapperProps<T = any,U = any, V = any> {
-    source: ResourceKind<T>
-    target: ResourceKind<U>
+export interface ResourceTypeProviderMappingProps<T = any,U = any, V = any> {
+    source: Resource
+    target: Resource
     value?: V
-    sourceEntities: SchemaEntity[]
-    targetEntities: SchemaEntity[]
+    sourceEntities: Entity[]
+    targetEntities: Entity[]
     title:string
-    onDataChanged?: (change: MappingChange<T,U,V>) => void
+    onDataChanged?: (change: ResourceConnectionMappingChange<T,U,V>) => void
 }
 
-export interface ResourceInspectProps {
+export interface ResourceTypeProviderInspectorProps {
     trafficLines: Traffic[]
     mapping: ConnectionMethodsMapping
 }
 
-export interface ResourceConfigProps  {
-    block: BlockKind
+export interface ResourceTypeProviderEditorProps {
+    block: BlockDefinition
     creating?:boolean //True if the resource is new
 }
 
-export interface ResourceConverter<T = any,V = ConnectionMethodsMapping> {
-    mappingComponentType?: ComponentType<ResourceMapperProps>
-    inspectComponentType?: ComponentType<ResourceInspectProps>
+export interface ResourceTypeConverter<T = any,V = ConnectionMethodsMapping> {
+    mappingComponentType?: ComponentType<ResourceTypeProviderMappingProps>
+    inspectComponentType?: ComponentType<ResourceTypeProviderInspectorProps>
     fromKind: string
-    createFrom?: (source:ResourceKind) => ResourceKind,
-    validateMapping?:(connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => string[],
-    updateMapping?: (connection:BlockConnectionSpec<V>, from:ResourceKind<T>, to: ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
-    createMapping?: (from:ResourceKind<T>, to:ResourceKind<T>, fromEntities:SchemaEntity[], toEntities:SchemaEntity[]) => V
+    createFrom?: (source:Resource) => Resource,
+    validateMapping?:(connection:Connection, from:Resource, to: Resource, fromEntities:Entity[], toEntities:Entity[]) => string[],
+    updateMapping?: (connection:Connection, from:Resource, to: Resource, fromEntities:Entity[], toEntities:Entity[]) => V
+    createMapping?: (from:Resource, to:Resource, fromEntities:Entity[], toEntities:Entity[]) => V
 }
 
-export interface ResourceProviderConfig<T = any,U = any> {
-    resolveEntities?: (resource: ResourceKind<U,T>) => string[];
-    renameEntityReferences?: (resource: ResourceKind, from:string, to:string) => void;
-    converters?: ResourceConverter<U>[];
-    componentType?: ComponentType<ResourceConfigProps>;
-    getCounterValue?: (data: ResourceKind<U, T>) => number;
-    hasMethod?: (data: ResourceKind<U, T>, methodId:string) => boolean;
-    validate?: (data: ResourceKind<U, T>, entities:SchemaEntity[]) => string[];
+export interface ResourceTypeProviderConfig<T = any,U = any> {
+    resolveEntities?: (resource: Resource) => string[];
+    renameEntityReferences?: (resource: Resource, from:string, to:string) => void;
+    converters?: ResourceTypeConverter<U>[];
+    componentType?: ComponentType<ResourceTypeProviderEditorProps>;
+    getCounterValue?: (data: Resource) => number;
+    hasMethod?: (data: Resource, methodId:string) => boolean;
+    validate?: (data: Resource, entities:Entity[]) => string[];
 }
 
-export interface ResourceConfig<T = any,U = any>  extends ResourceProviderConfig<T,U> {
+export interface ResourceTypeProvider<T = any,U = any>  extends ResourceTypeProviderConfig<T,U> {
     kind: string;
     version: string
     title?: string;
     role: ResourceRole;
-    type: ResourceType;
+    type: ResourceProviderType;
     consumableKind?: string;
 }

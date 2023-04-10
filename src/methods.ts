@@ -1,8 +1,10 @@
+import { EntityReference } from "@kapeta/schemas";
 import {HTTPMethod} from "./http";
-import {SchemaEntryType} from "./schemas";
+
+
 
 export interface MethodArgument {
-    type: SchemaEntryType
+    type: EntityReference
 }
 
 export interface RESTMethodArgument extends MethodArgument{
@@ -16,7 +18,7 @@ export interface Method<T extends MethodArgument> {
     arguments?: {
         [key: string]: T
     }
-    responseType?: SchemaEntryType
+    responseType?: EntityReference
 }
 
 export interface RESTMethod extends Method<RESTMethodArgument> {
@@ -26,5 +28,5 @@ export interface RESTMethod extends Method<RESTMethodArgument> {
     arguments?: {
         [key: string]: RESTMethodArgument
     }
-    responseType?: SchemaEntryType
+    responseType?: EntityReference
 }
