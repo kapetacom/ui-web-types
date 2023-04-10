@@ -1,24 +1,18 @@
-import { BlockDefinition } from '@kapeta/schemas';
+import { BlockDefinition, BlockType, LanguageTarget } from '@kapeta/schemas';
 import {ComponentType} from 'react';
+import {ProviderBase} from "./general";
 
-export interface LanguageTargetProvider<T = any> {
-    kind: string
-    version: string
+export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
     blockKinds: string[]
-    title?: string
     componentType?: ComponentType
     validate?: (options:T) => string[];
 }
-
 
 export interface BlockTypeProviderProps {
     creating?:boolean
 }
 
-export interface BlockTypeProvider {
-    kind: string
-    version: string
-    title?: string
+export interface IBlockTypeProvider  extends ProviderBase<BlockType> {
     componentType: ComponentType<BlockTypeProviderProps>
     validate?: (block: BlockDefinition) => string[];
 }

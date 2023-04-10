@@ -1,6 +1,7 @@
 import {ComponentType} from "react";
 import {Traffic} from "./traffic";
-import {BlockDefinition, Connection, Entity, Resource} from "@kapeta/schemas";
+import {BlockDefinition, Connection, Entity, Resource, ResourceType} from "@kapeta/schemas";
+import {ProviderBase} from "./general";
 
 export enum ResourceRole {
     CONSUMES = 'CONSUMES',
@@ -52,7 +53,7 @@ export interface ResourceTypeProviderEditorProps {
     creating?:boolean //True if the resource is new
 }
 
-export interface ResourceTypeConverter<T = any,V = ConnectionMethodsMapping> {
+export interface IResourceTypeConverter<T = any,V = ConnectionMethodsMapping> {
     mappingComponentType?: ComponentType<ResourceTypeProviderMappingProps>
     inspectComponentType?: ComponentType<ResourceTypeProviderInspectorProps>
     fromKind: string
@@ -62,20 +63,17 @@ export interface ResourceTypeConverter<T = any,V = ConnectionMethodsMapping> {
     createMapping?: (from:Resource, to:Resource, fromEntities:Entity[], toEntities:Entity[]) => V
 }
 
-export interface ResourceTypeProviderConfig<T = any,U = any> {
+export interface IResourceTypeProviderConfig<T = any,U = any> {
     resolveEntities?: (resource: Resource) => string[];
     renameEntityReferences?: (resource: Resource, from:string, to:string) => void;
-    converters?: ResourceTypeConverter<U>[];
+    converters?: IResourceTypeConverter<U>[];
     componentType?: ComponentType<ResourceTypeProviderEditorProps>;
     getCounterValue?: (data: Resource) => number;
     hasMethod?: (data: Resource, methodId:string) => boolean;
     validate?: (data: Resource, entities:Entity[]) => string[];
 }
 
-export interface ResourceTypeProvider<T = any,U = any>  extends ResourceTypeProviderConfig<T,U> {
-    kind: string;
-    version: string
-    title?: string;
+export interface IResourceTypeProvider<T = any,U = any>  extends IResourceTypeProviderConfig<T,U>, ProviderBase<ResourceType> {
     role: ResourceRole;
     type: ResourceProviderType;
     consumableKind?: string;

@@ -6,12 +6,20 @@ export enum ItemType {
     CONNECTION = "CONNECTION"
 }
 
-import {Metadata} from "@kapeta/schemas";
+import {IconValue, Metadata} from "@kapeta/schemas";
 
 export interface SchemaKind<T = any, U = Metadata> {
     kind: string
     metadata: U
     spec: T
+}
+
+export interface ProviderBase<T = SchemaKind> {
+    kind: string
+    version: string
+    icon?: IconValue
+    title?: string
+    definition: T
 }
 
 export interface Type<T> extends Function {
