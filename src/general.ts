@@ -1,18 +1,30 @@
 /* GENERIC TYPES */
 
-import {BlockConnectionSpec} from "./plans";
-import {SchemaKind} from "./core";
-
 export enum ItemType {
     BLOCK = "BLOCK",
     RESOURCE = "RESOURCE",
     CONNECTION = "CONNECTION"
 }
 
+import {IconValue, Metadata} from "@kapeta/schemas";
+
+export interface SchemaKind<T = any, U = Metadata> {
+    kind: string
+    metadata: U
+    spec: T
+}
+
+export interface ProviderBase<T = SchemaKind> {
+    kind: string
+    version: string
+    icon?: IconValue
+    title?: string
+    definition: T
+}
+
 export interface Type<T> extends Function {
     new(...args: any[]): T;
 }
-
 
 export interface TypedName {
     name: string
@@ -33,11 +45,4 @@ export interface Asset<T = SchemaKind> {
     ymlPath: string
     version: string
     editable: boolean
-}
-
-
-export interface DataWrapper<T = SchemaKind | BlockConnectionSpec> {
-    id: string
-    getData: () => T
-    setData: (data: T) => void
 }
