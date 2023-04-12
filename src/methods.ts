@@ -1,10 +1,10 @@
-import { EntityValueType } from "@kapeta/schemas";
+import { EntityProperty } from "@kapeta/schemas";
 import {HTTPMethod} from "./http";
 
 
 
 export interface MethodArgument {
-    type: EntityValueType
+    type: EntityProperty
 }
 
 export interface RESTMethodArgument extends MethodArgument{
@@ -18,7 +18,7 @@ export interface Method<T extends MethodArgument> {
     arguments?: {
         [key: string]: T
     }
-    responseType?: EntityValueType
+    responseType?: EntityProperty
 }
 
 export interface RESTMethod extends Method<RESTMethodArgument> {
@@ -28,5 +28,5 @@ export interface RESTMethod extends Method<RESTMethodArgument> {
     arguments?: {
         [key: string]: RESTMethodArgument
     }
-    responseType?: EntityValueType
+    responseType?: EntityProperty
 }
