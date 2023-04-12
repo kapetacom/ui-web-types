@@ -1,13 +1,11 @@
-import { EntityProperty } from "@kapeta/schemas";
 import {HTTPMethod} from "./http";
+import {TypeLike} from "./general";
 
+export interface MethodArgument extends TypeLike {
 
-
-export interface MethodArgument {
-    type: EntityProperty
 }
 
-export interface RESTMethodArgument extends MethodArgument{
+export interface RESTMethodArgument extends MethodArgument {
     transport?: string
 }
 
@@ -18,7 +16,7 @@ export interface Method<T extends MethodArgument> {
     arguments?: {
         [key: string]: T
     }
-    responseType?: EntityProperty
+    responseType?: TypeLike
 }
 
 export interface RESTMethod extends Method<RESTMethodArgument> {
@@ -28,5 +26,5 @@ export interface RESTMethod extends Method<RESTMethodArgument> {
     arguments?: {
         [key: string]: RESTMethodArgument
     }
-    responseType?: EntityProperty
+    responseType?: TypeLike
 }

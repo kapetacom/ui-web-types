@@ -1,4 +1,5 @@
 /* GENERIC TYPES */
+import {IconValue, Metadata} from "@kapeta/schemas";
 
 export enum ItemType {
     BLOCK = "BLOCK",
@@ -6,7 +7,10 @@ export enum ItemType {
     CONNECTION = "CONNECTION"
 }
 
-import {IconValue, Metadata} from "@kapeta/schemas";
+export interface TypeLike {
+    type?:string
+    ref?:string
+}
 
 export interface SchemaKind<T = any, U = Metadata> {
     kind: string
