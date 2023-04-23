@@ -5,7 +5,7 @@ import {BlockInstance} from "@kapeta/schemas/dist/cjs";
 
 export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
     blockKinds: string[]
-    componentType?: ComponentType
+    editorComponent?: ComponentType
     validate?: (options:T) => string[];
 }
 
