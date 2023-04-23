@@ -3,6 +3,7 @@ import {Traffic} from "./traffic";
 import {BlockDefinition, Connection, Entity, Resource, ResourceType} from "@kapeta/schemas";
 import {ProviderBase} from "./general";
 
+
 export enum ResourceRole {
     CONSUMES = 'CONSUMES',
     PROVIDES = 'PROVIDES'
@@ -73,8 +74,18 @@ export interface IResourceTypeProviderConfig<T = any,U = any> {
     validate?: (data: Resource, entities:Entity[]) => string[];
 }
 
+export interface ResourceTypeShapeProps {
+    resource: Resource
+    role: ResourceRole;
+    index: number;
+    readOnly?: boolean;
+}
+
 export interface IResourceTypeProvider<T = any,U = any>  extends IResourceTypeProviderConfig<T,U>, ProviderBase<ResourceType> {
     role: ResourceRole;
     type: ResourceProviderType;
     consumableKind?: string;
+
+    //Allows overwriting the shape / rendering of the resource
+    shapeComponent?: ComponentType<ResourceTypeShapeProps>
 }
