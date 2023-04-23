@@ -65,12 +65,25 @@ export interface IResourceTypeConverter<T = any,V = ConnectionMethodsMapping> {
 }
 
 export interface IResourceTypeProviderConfig<T = any,U = any> {
+    //Function that can resolve entities from a resource
     resolveEntities?: (resource: Resource) => string[];
+
+    //Function that can rename entity references in a resource
     renameEntityReferences?: (resource: Resource, from:string, to:string) => void;
+
+    //List of converters that can convert this kind into other kinds - and also provides mapping UI
     converters?: IResourceTypeConverter<U>[];
-    componentType?: ComponentType<ResourceTypeProviderEditorProps>;
+
+    //React component for editing the resource type
+    editorComponent?: ComponentType<ResourceTypeProviderEditorProps>;
+
+    //Function that determines has a counter and what that counter is
     getCounterValue?: (data: Resource) => number;
+
+    //For resources that provide methods - this function determines if the resource has a specific method
     hasMethod?: (data: Resource, methodId:string) => boolean;
+
+    //Validates a resource and returns a list of errors
     validate?: (data: Resource, entities:Entity[]) => string[];
 }
 
@@ -82,10 +95,15 @@ export interface ResourceTypeShapeProps {
 }
 
 export interface IResourceTypeProvider<T = any,U = any>  extends IResourceTypeProviderConfig<T,U>, ProviderBase<ResourceType> {
+    //Defines the role of the resource - either provider or consumer.
     role: ResourceRole;
+
+    //Defines the type of resource.
     type: ResourceProviderType;
+
+    //If this is a provider (See role) - consumableKind defines the kind of resource that can consume this - if any
     consumableKind?: string;
 
-    //Allows overwriting the shape / rendering of the resource
+    //React component that allows overwriting the shape / rendering of the resource
     shapeComponent?: ComponentType<ResourceTypeShapeProps>
 }

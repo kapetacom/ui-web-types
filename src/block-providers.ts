@@ -28,13 +28,21 @@ export interface BlockTypeShapeProps<T = BlockDefinition> {
 }
 
 export interface IBlockTypeProvider<T = BlockDefinition>  extends ProviderBase<BlockType> {
+    //React Component for editing the block definition
     editorComponent: ComponentType<BlockTypeEditorProps<T>>
 
-    //Allows overwriting the shape / rendering of the block itself
+    //React component that allows overwriting the shape / rendering of the block itself
     configComponent?: ComponentType<BlockTypeConfigProps<T>>
+
+    //Create default configuration for the block
     createDefaultConfig?: (block: T, instance: BlockInstance) => {[key:string]:any}
 
-    //Allows overwriting the shape / rendering of the block itself
+    //React component that allows overwriting the shape / rendering of the block itself
     shapeComponent?: ComponentType<BlockTypeShapeProps<T>>
+
+    //Validate block definition. Returns array of errors
     validate?: (block: T) => string[];
+
+    //Validate block configuration. Returns array of errors
+    validateConfiguration?: (block: T, instance: BlockInstance, config:{[key:string]:any}) => string[];
 }
