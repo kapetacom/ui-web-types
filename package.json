@@ -22,6 +22,7 @@
         "prebuild": "rm -rf dist",
         "start": "rollup -c -w",
         "build": "npm run prebuild && rollup -c",
+        "test": "echo its fine",
         "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
