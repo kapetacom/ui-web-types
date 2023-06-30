@@ -1,30 +1,28 @@
-import {HTTPMethod} from "./http";
-import {TypeLike} from "./general";
+import { HTTPMethod } from './http';
+import { TypeLike } from './general';
 
-export interface MethodArgument extends TypeLike {
-
-}
+export interface MethodArgument extends TypeLike {}
 
 export interface RESTMethodArgument extends MethodArgument {
-    transport?: string
+    transport?: string;
 }
 
 export interface Method<T extends MethodArgument> {
-    description?: string
-    method: HTTPMethod
-    path: string
+    description?: string;
+    method: HTTPMethod;
+    path: string;
     arguments?: {
-        [key: string]: T
-    }
-    responseType?: TypeLike
+        [key: string]: T;
+    };
+    responseType?: TypeLike;
 }
 
 export interface RESTMethod extends Method<RESTMethodArgument> {
-    description?: string
-    method: HTTPMethod
-    path: string
+    description?: string;
+    method: HTTPMethod;
+    path: string;
     arguments?: {
-        [key: string]: RESTMethodArgument
-    }
-    responseType?: TypeLike
+        [key: string]: RESTMethodArgument;
+    };
+    responseType?: TypeLike;
 }

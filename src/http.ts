@@ -7,25 +7,24 @@ export enum HTTPMethod {
     DELETE = 'DELETE',
     HEAD = 'HEAD',
     PATCH = 'PATCH',
-    OPTION = 'OPTION'
+    OPTION = 'OPTION',
 }
 
 export enum HTTPTransport {
     PATH = 'PATH',
     BODY = 'BODY',
     QUERY = 'QUERY',
-    HEADER = 'HEADER'
+    HEADER = 'HEADER',
 }
 
-export interface HTTPRequest{
-    url:string
-    method:string
-    body:string
-    headers:{[key:string]:string}
-
+export interface HTTPRequest {
+    url: string;
+    method: string;
+    body: string;
+    headers: { [key: string]: string };
 }
 export interface HTTPResponse {
-    code:number
-    body?:string
-    headers:{[key:string]:string}
+    code: number;
+    body?: string;
+    headers: { [key: string]: string };
 }
