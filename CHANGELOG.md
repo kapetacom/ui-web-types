@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/kapetacom/ui-web-types/compare/v0.1.0...v0.1.1) (2023-07-01)
+
+
+### Bug Fixes
+
+* Format with correct config :) ([65f6e0a](https://github.com/kapetacom/ui-web-types/commit/65f6e0aedd5cf5fd8d453c7f127480e5bb95a011))
+
 # [0.1.0](https://github.com/kapetacom/ui-web-types/compare/v0.0.61...v0.1.0) (2023-06-07)
 
 
