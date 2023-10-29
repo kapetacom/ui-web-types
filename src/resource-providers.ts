@@ -1,3 +1,8 @@
+/**
+ * Copyright 2023 Kapeta Inc.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { ComponentType } from 'react';
 import { Traffic } from './traffic';
 import { BlockDefinition, Connection, Entity, Resource, ResourceType } from '@kapeta/schemas';

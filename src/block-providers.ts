@@ -1,3 +1,8 @@
+/**
+ * Copyright 2023 Kapeta Inc.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { BlockDefinition, BlockType, LanguageTarget } from '@kapeta/schemas';
 import { ComponentType } from 'react';
 import { ProviderBase } from './general';
