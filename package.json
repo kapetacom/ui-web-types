@@ -27,7 +27,7 @@
         "start": "rollup -c -w",
         "prebuild": "rm -rf dist",
         "build": "rollup -c",
-        "test": "echo its fine",
+        "test": "echo its fine.",
         "prepublishOnly": "npm run build",
         "format": "prettier --write ."
     },
