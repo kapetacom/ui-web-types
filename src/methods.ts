@@ -10,6 +10,7 @@ export interface MethodArgument extends TypeLike {}
 
 export interface RESTMethodArgument extends MethodArgument {
     transport?: string;
+    argument?: string;
 }
 
 export interface Method<T extends MethodArgument> {
