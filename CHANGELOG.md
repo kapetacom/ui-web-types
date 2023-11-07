@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/kapetacom/ui-web-types/compare/v0.1.1...v0.1.2) (2023-11-07)
+
+
+### Bug Fixes
+
+* adding . to trigger release ([638fbd2](https://github.com/kapetacom/ui-web-types/commit/638fbd2a4e12fa1e6a76c5f526ca19ccac006a2f))
+
 ## [0.1.1](https://github.com/kapetacom/ui-web-types/compare/v0.1.0...v0.1.1) (2023-07-01)
 
 
