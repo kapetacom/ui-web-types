@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/kapetacom/ui-web-types/compare/v0.1.2...v0.2.0) (2023-11-18)
+
+
+### Features
+
+* Add resource kinds to language targets and block types ([c833991](https://github.com/kapetacom/ui-web-types/commit/c8339911c801724ef9a5ecd36c0b6a27e54faed2))
+
 ## [0.1.2](https://github.com/kapetacom/ui-web-types/compare/v0.1.1...v0.1.2) (2023-11-07)
 
 
