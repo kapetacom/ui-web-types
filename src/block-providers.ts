@@ -10,6 +10,7 @@ import { BlockInstance } from '@kapeta/schemas';
 
 export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
     blockKinds: string[];
+    resourceKinds?: string[];
     editorComponent?: ComponentType;
     validate?: (options: T) => string[];
 }
