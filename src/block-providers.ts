@@ -9,7 +9,12 @@ import { ProviderBase } from './general';
 import { BlockInstance } from '@kapeta/schemas';
 
 export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
+
+    //List of block kinds that this target can be applied to.
     blockKinds: string[];
+
+    //List of resource kinds that this target supports. If not specified, target can consume any resource
+    resourceKinds?: string[];
     editorComponent?: ComponentType;
     validate?: (options: T) => string[];
 }
@@ -50,6 +55,10 @@ export interface IBlockTypeProvider<T = BlockDefinition> extends ProviderBase<Bl
     shapeComponent?: ComponentType<BlockTypeShapeProps<T>>;
     shapeWidth?: number;
     getShapeHeight?: (resourceHeight: number) => number;
+
+    // List of resource kinds that this block type supports.
+    // If not specified, block supports any type (depends on target)
+    resourceKinds?: string[];
 
     //Validate block definition. Returns array of errors
     validate?: (block: T) => string[];
