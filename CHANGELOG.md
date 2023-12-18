@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/kapetacom/ui-web-types/compare/v0.2.0...v0.3.0) (2023-12-18)
+
+
+### Features
+
+* RESTMethodArgument optional support ([6215ff0](https://github.com/kapetacom/ui-web-types/commit/6215ff0b728805e7c6d9a0e04caae1673ff07207))
+
 # [0.2.0](https://github.com/kapetacom/ui-web-types/compare/v0.1.2...v0.2.0) (2023-11-18)
 
 
