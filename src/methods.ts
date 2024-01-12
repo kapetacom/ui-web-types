@@ -32,4 +32,5 @@ export interface RESTMethod extends Method<RESTMethodArgument> {
         [key: string]: RESTMethodArgument;
     };
     responseType?: TypeLike;
+    controllerName?: string;
 }
