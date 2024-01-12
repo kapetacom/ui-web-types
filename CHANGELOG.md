@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/kapetacom/ui-web-types/compare/v0.3.0...v0.4.0) (2024-01-12)
+
+
+### Features
+
+* Add controller name to rest methods ([#17](https://github.com/kapetacom/ui-web-types/issues/17)) ([0dd3079](https://github.com/kapetacom/ui-web-types/commit/0dd30794e98ee483233feb5886a05f01b92d2495))
+
 # [0.3.0](https://github.com/kapetacom/ui-web-types/compare/v0.2.0...v0.3.0) (2023-12-18)
 
 
