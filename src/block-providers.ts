@@ -7,6 +7,7 @@ import { BlockDefinition, BlockType, LanguageTarget } from '@kapeta/schemas';
 import { ComponentType } from 'react';
 import { ProviderBase } from './general';
 import { BlockInstance } from '@kapeta/schemas';
+import { DSLEnum, DSLDataType } from '@kapeta/kaplang-core';
 
 export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
 
@@ -16,6 +17,7 @@ export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageT
     //List of resource kinds that this target supports. If not specified, target can consume any resource
     resourceKinds?: string[];
     editorComponent?: ComponentType;
+    getBuiltInTypes?: () => (DSLEnum | DSLDataType)[];
     validate?: (options: T) => string[];
 }
 
