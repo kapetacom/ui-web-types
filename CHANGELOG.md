@@ -1,3 +1,15 @@
+# [1.0.0](https://github.com/kapetacom/ui-web-types/compare/v0.4.0...v1.0.0) (2024-01-18)
+
+
+### Features
+
+* Add method for getting built-in-types for language target ([#18](https://github.com/kapetacom/ui-web-types/issues/18)) ([225712d](https://github.com/kapetacom/ui-web-types/commit/225712d4160d651b31f93ce62240216af07326f9))
+
+
+### BREAKING CHANGES
+
+* Requires dependencies that have breaking changes
+
 # [0.4.0](https://github.com/kapetacom/ui-web-types/compare/v0.3.0...v0.4.0) (2024-01-12)
 
 
