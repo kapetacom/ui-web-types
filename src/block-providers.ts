@@ -8,14 +8,20 @@ import { ComponentType } from 'react';
 import { ProviderBase } from './general';
 import { BlockInstance } from '@kapeta/schemas';
 
-export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
+export interface DSLInclude {
+    source: string;
+    language: string;
+    version: string;
+}
 
+export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
     //List of block kinds that this target can be applied to.
     blockKinds: string[];
 
     //List of resource kinds that this target supports. If not specified, target can consume any resource
     resourceKinds?: string[];
     editorComponent?: ComponentType;
+    getDSLIncludes?: () => DSLInclude;
     validate?: (options: T) => string[];
 }
 
