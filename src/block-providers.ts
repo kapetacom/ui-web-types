@@ -14,6 +14,12 @@ export interface DSLInclude {
     version: string;
 }
 
+export enum IncludeContextType {
+    REST,
+    ENTITIES,
+    CONFIG,
+}
+
 export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageTarget> {
     //List of block kinds that this target can be applied to.
     blockKinds: string[];
@@ -21,7 +27,7 @@ export interface ILanguageTargetProvider<T = any> extends ProviderBase<LanguageT
     //List of resource kinds that this target supports. If not specified, target can consume any resource
     resourceKinds?: string[];
     editorComponent?: ComponentType;
-    getDSLIncludes?: () => DSLInclude;
+    getDSLIncludes?: (context: IncludeContextType) => DSLInclude;
     validate?: (options: T) => string[];
 }
 
