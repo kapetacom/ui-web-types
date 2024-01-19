@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/kapetacom/ui-web-types/compare/v1.0.0...v1.1.0) (2024-01-19)
+
+
+### Features
+
+* Add context argument to include getter method ([35075e0](https://github.com/kapetacom/ui-web-types/commit/35075e04f4af02ddcd2eec8f7f3620fef4139e8f))
+
 # [1.0.0](https://github.com/kapetacom/ui-web-types/compare/v0.4.0...v1.0.0) (2024-01-18)
 
 
