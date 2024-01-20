@@ -11,7 +11,7 @@ import { IBlockTypeProvider, ILanguageTargetProvider } from './block-providers';
 
 interface ResourceContainerContext {
     blockProvider: IBlockTypeProvider;
-    languageProvider: ILanguageTargetProvider;
+    languageProvider?: ILanguageTargetProvider;
 }
 
 export enum ResourceRole {
