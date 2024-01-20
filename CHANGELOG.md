@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/kapetacom/ui-web-types/compare/v1.1.0...v1.2.0) (2024-01-20)
+
+
+### Features
+
+* Expands on the resource type provider to allow more flexible types ([#19](https://github.com/kapetacom/ui-web-types/issues/19)) ([1a85f74](https://github.com/kapetacom/ui-web-types/commit/1a85f740947c557a712a173df0f40db81c4d43ac))
+
 # [1.1.0](https://github.com/kapetacom/ui-web-types/compare/v1.0.0...v1.1.0) (2024-01-19)
 
 
