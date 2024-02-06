@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/kapetacom/ui-web-types/compare/v1.2.0...v1.3.0) (2024-02-06)
+
+
+### Features
+
+* Add capability for allowing multiple connections to consumers ([#20](https://github.com/kapetacom/ui-web-types/issues/20)) ([187a16a](https://github.com/kapetacom/ui-web-types/commit/187a16ac258ffb1539a8777cc489fce5b3734b80))
+
 # [1.2.0](https://github.com/kapetacom/ui-web-types/compare/v1.1.0...v1.2.0) (2024-01-20)
 
 
