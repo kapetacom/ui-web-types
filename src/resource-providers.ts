@@ -172,5 +172,10 @@ export interface IResourceTypeProvider<MetadataType = ResourceMetadata, Resource
          * instead of the Entity types
          */
         directDSL?: boolean;
+
+        /**
+         * If true, a consumer resource can have multiple connections. Default is false
+         */
+        allowMultipleConnections?: boolean;
     };
 }
