@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/kapetacom/ui-web-types/compare/v1.3.0...v1.3.1) (2024-02-12)
+
+
+### Bug Fixes
+
+* Bump kapeta dependencies ([04fc537](https://github.com/kapetacom/ui-web-types/commit/04fc5375fff5fe8aca6da6890270ba24d393ecb1))
+
 # [1.3.0](https://github.com/kapetacom/ui-web-types/compare/v1.2.0...v1.3.0) (2024-02-06)
 
 
