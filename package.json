@@ -36,13 +36,13 @@
         "@types/react": ">=18",
         "lodash": "4",
         "react": ">=18",
-        "@kapeta/schemas": "^2",
-        "@kapeta/kaplang-core": "^1.9"
+        "@kapeta/schemas": "^3.2.2",
+        "@kapeta/kaplang-core": "^1.11.1"
     },
     "devDependencies": {
-        "@kapeta/prettier-config": "^0.6.0",
-        "@kapeta/kaplang-core": "^1.9",
-        "@kapeta/schemas": "^2",
+        "@kapeta/prettier-config": "^0.6.2",
+        "@kapeta/kaplang-core": "^1.11.1",
+        "@kapeta/schemas": "^3.2.2",
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-node-resolve": "^14.1.0",
         "@rollup/plugin-typescript": "^8.5.0",
