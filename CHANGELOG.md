@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/kapetacom/ui-web-types/compare/v1.3.1...v1.3.2) (2024-05-01)
+
+
+### Bug Fixes
+
+* Bump kaplang and schemas ([e34ae77](https://github.com/kapetacom/ui-web-types/commit/e34ae77836e21f943131c5c686bd1aa542c00cfe))
+
 ## [1.3.1](https://github.com/kapetacom/ui-web-types/compare/v1.3.0...v1.3.1) (2024-02-12)
 
 
