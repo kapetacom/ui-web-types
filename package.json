@@ -41,8 +41,8 @@
     },
     "devDependencies": {
         "@kapeta/prettier-config": "^0.6.2",
-        "@kapeta/kaplang-core": "^1.11.1",
-        "@kapeta/schemas": "^3.2.2",
+        "@kapeta/kaplang-core": "^1.13.0",
+        "@kapeta/schemas": "^3.6.0",
         "@rollup/plugin-commonjs": "^22.0.2",
         "@rollup/plugin-node-resolve": "^14.1.0",
         "@rollup/plugin-typescript": "^8.5.0",
