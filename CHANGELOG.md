@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/kapetacom/ui-web-types/compare/v1.3.3...v1.3.4) (2024-06-27)
+
+
+### Bug Fixes
+
+* add icons property to ProviderBase ([e5cf92e](https://github.com/kapetacom/ui-web-types/commit/e5cf92e324158f88939a9eb8b1b71ea0b9e174fd))
+
 ## [1.3.3](https://github.com/kapetacom/ui-web-types/compare/v1.3.2...v1.3.3) (2024-05-07)
 
 
