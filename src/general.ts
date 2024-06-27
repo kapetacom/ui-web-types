@@ -26,7 +26,9 @@ export interface SchemaKind<T = any, U = Metadata> {
 export interface ProviderBase<T = SchemaKind> {
     kind: string;
     version: string;
+    /** @deprecated Use icons instead */
     icon?: IconValue;
+    icons?: IconValue[];
     title?: string;
     definition: T;
 }
